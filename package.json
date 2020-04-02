@@ -1,0 +1,39 @@
+{
+  "name": "redis-mpx",
+  "version": "0.0.2",
+  "description": "A Redis Pub/Sub Multiplexer",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "directories": {
+    "example": "examples",
+    "lib": "src"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RedisMPX/node-mpx.git"
+  },
+  "keywords": [
+    "redis",
+    "pubsub",
+    "node",
+    "js",
+    "multiplexer"
+  ],
+  "author": "Loris Cro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RedisMPX/node-mpx/issues"
+  },
+  "homepage": "https://github.com/RedisMPX/node-mpx#readme",
+  "dependencies": {
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "ws": "^7.2.3"
+  }
+}
