@@ -62,7 +62,7 @@ PromiseSubscription.prototype.waitForNewPromise =
 PromiseSubscription.prototype.newPromise = 
 	function(suffix, timeout) {
 		if (this.closed) throw new SubscriptionClosedError("subscription closed");
-		if (!this.active) throw SubscriptionInactiveError("the PromiseSubscription is not active");
+		if (!this.active) throw new SubscriptionInactiveError("the PromiseSubscription is not active");
 
 		let channel = this.prefix + suffix;
 		if (!this.channels[channel]) {

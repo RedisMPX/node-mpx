@@ -46,8 +46,10 @@ server.on('connection', function connection(ws) {
     });
 
     ws.send("// Sending `+hello` will subscribe you to channel `hello`, while `-hello` will do the opposite.");
-    ws.send("Sending `!hello` will broadcast the next message you send to `hello`.");
-    ws.send("You can subscribe to more channels than one.");
+    ws.send("// Sending `!hello` will broadcast the next message you send to `hello`.");
+    ws.send("// You can subscribe to more channels than one.");
+    ws.send("// If the server loses connection with Redis, it will automatically try to reconnect.");
+
 
 });
 

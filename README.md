@@ -45,7 +45,7 @@ let mpx = new Multiplexer();
 // as Buffer instances, use `.toString()` to decode their 
 // contents if necessary.
 async funcion onMessage(channel, message){
-	console.log("ch:", channel.toString(), "msg:", message.toString());
+    console.log("ch:", channel.toString(), "msg:", message.toString());
 }
 
 // onDisconnect is a callback (can be async) 
@@ -71,6 +71,10 @@ function onActivation(name){
 let channelSub = mpx.createChannelSubcription(onMessage, null, null);
 let patternSub = mpx.createPatternSubscription("hello-*", onMessage, null, onActivation);
 let promiseSub = mpx.createPromiseSubscription("hello-");
+
+
+// Close the multiplexer once you're done with it.
+mpx.close();
 ```
 
 ### ChannelSubscription
@@ -88,6 +92,9 @@ channelSub.add("chan3");
 
 // Remove a channel
 channelSub.remove("chan2");
+
+// Clear the subscription (remove all channels)
+channelSub.clear();
 
 // Close the subscription
 channelSub.close();
@@ -133,8 +140,10 @@ try {
     //
     //   > PUBLISH hello-world "your-promise-payload"
     //
-} catch redismpx.SubscriptionInactiveError as e {
-    // Wait and then Retry? Return an error to the user? Up to you.
+} catch (e) {
+    if (e instanceof redismpx.SubscriptionInactiveError){
+        // Wait and then Retry? Return an error to the user? Up to you.
+    }
 }
 
 // A way of creating a promise that ensures no SubscriptionInactiveError
@@ -151,20 +160,23 @@ try {
     let result = await promise
     console.log(result.toString()) // prints your-promise-payload
 } catch (e) {
-	if (e instanceof redismpx.PromiseTimeoutError){
-    	// The promise timed out.
-	} else if (e instanceof redismpx.SubscriptionInactiveError) {
-		// The subscription became inactive while the promise was
-		// still pending.
-	} else if (e instanceof redismpx.SubscriptionClosedError) {
-		// The subscription was closed while the promise was
-		// still pending.
-	}
+    if (e instanceof redismpx.PromiseTimeoutError){
+        // The promise timed out.
+    } else if (e instanceof redismpx.SubscriptionInactiveError) {
+        // The subscription became inactive while the promise was
+        // still pending.
+    } else if (e instanceof redismpx.SubscriptionClosedError) {
+        // The subscription was closed while the promise was
+        // still pending.
+    }
 }
 
-// Close the subscription (will automatically cancel all
-// outstanding promises and unlock all `waitFor*` waiters).
-promiseSub.close()
+// Clear the subscription (will reject all outstanding
+// promises and unlock all `waitFor*` waiters)
+promiseSub.clear();
+
+// Close the subscription (will call clear()).
+promiseSub.close();
 ```
 
 ## WebSocket Example
