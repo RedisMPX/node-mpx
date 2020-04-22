@@ -13,7 +13,7 @@ List.prototype.prepend = function(listNode) {
 	listNode._list = this;
 	if (this._head) {
 		this._head._prev = listNode;
-		this._next = this._head;
+		listNode._next = this._head;
 		this._head = listNode;
 	} else {
 		this._head = listNode;
