@@ -44,7 +44,7 @@ let mpx = new Multiplexer();
 // Bott channel name and message will be given to you
 // as Buffer instances, use `.toString()` to decode their 
 // contents if necessary.
-async funcion onMessage(channel, message){
+async function onMessage(channel, message){
     console.log("ch:", channel.toString(), "msg:", message.toString());
 }
 
